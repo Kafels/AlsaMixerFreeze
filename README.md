@@ -29,6 +29,6 @@ This repository has a script called `alsactl.py` that listens `alsactl monitor` 
 - alsactl
 - stdbuf
 
-## Improvements (I'm too lazy to do this now)
+## Improvements
 - Create a symlink
 - Execute at system startup
