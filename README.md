@@ -15,7 +15,7 @@ This repository has a script called `alsactl.py` that listens `alsactl monitor` 
 ## How to setup
 - `alsactl -f $HOME/.config/asound.state store` (Store your custom configuration)
 - `chmod +x alsamixer_freeze.sh` (Add permission to execute)
-- `ln -s $HOME/PycharmProjects/personal/AlsaMixerFreeze/alsamixer_freeze.sh $HOME/.local/bin/alsamixer_freeze` (Creating a symlink)
+- `ln -s [path_of_cloned_repository]/alsamixer_freeze.sh $HOME/.local/bin/alsamixer_freeze` (Creating a symlink)
 - `echo alsamixer_freeze >> $HOME/.profile` (Automatically freeze after login - Optional)
 
 ## Tested environment
