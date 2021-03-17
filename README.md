@@ -12,10 +12,11 @@ Every application that uses microphone (Discord, Google Hangouts, Microsoft Team
 ## What I did
 This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is shooted, it means that something changed the configuration. After this, automatically executes `alsactl -f [alsactl_restore_conf_path] restore` to return the custom configuration.
 
-## How to execute
-- `alsactl -f $HOME/.config/asound.state store` (Store the custom configuration)
-- `chmod +x run_in_bg.sh` (Enable shell to execute)
-- `./run_in_bg.sh` (Execute in background)
+## How to setup
+- `alsactl -f $HOME/.config/asound.state store` (Store your custom configuration)
+- `chmod +x alsamixer_freeze.sh` (Add permission to execute)
+- `ln -s $HOME/PycharmProjects/personal/AlsaMixerFreeze/alsamixer_freeze.sh $HOME/.local/bin/alsamixer_freeze` (Creating a symlink)
+- `echo alsamixer_freeze >> $HOME/.profile` (Automatically freeze after login - Optional)
 
 ## Tested environment
 - Ubuntu 20.04
@@ -28,7 +29,3 @@ This repository has a script called `alsactl.py` that listens `alsactl monitor` 
 ## Unix dependencies:
 - alsactl
 - stdbuf
-
-## Improvements
-- Create a symlink
-- Execute at system startup
