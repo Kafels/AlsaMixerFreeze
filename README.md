@@ -1,7 +1,7 @@
 # AlsaMixerFreeze
 
 ## Problem
-Every application that uses microphone (Discord, Google Hangouts, Microsoft Teams, etc.) changes the current settings of alsamixer and usually starts a background noise. Example:
+Every application that uses microphone (Discord, Google Hangouts, Microsoft Teams, etc.) changes the current settings of alsamixer without any permission. Example:
 
 #### Personal configuration
 ![image](https://user-images.githubusercontent.com/17178349/111149298-7bcd9e80-856b-11eb-88b9-d8d8021b77a4.png)
@@ -9,14 +9,11 @@ Every application that uses microphone (Discord, Google Hangouts, Microsoft Team
 #### After opening any application that requires microphone:
 ![image](https://user-images.githubusercontent.com/17178349/111149397-9869d680-856b-11eb-80bb-69b1cbeebf1e.png)
 
-## What I did
-This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is shooted, it means that something changed the configuration. After this, automatically executes `alsactl -f [alsactl_restore_conf_path] restore` to return the custom configuration.
+## What's the solution
+This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is fired, it means something tried to changed the configuration. After this, automatically executes `alsactl -f [alsactl_restore_conf_path] restore` to return the custom configuration.
 
 ## How to setup
-- `alsactl -f $HOME/.config/asound.state store` (Store your custom configuration)
-- `chmod +x alsamixer_freeze.sh` (Add permission to execute)
-- `ln -s [path_of_cloned_repository]/alsamixer_freeze.sh $HOME/.local/bin/alsamixer_freeze` (Creating a symlink)
-- `echo alsamixer_freeze >> $HOME/.profile` (Automatically freeze after login - Optional)
+- Run `chmod +x ./install && ./install.sh` command
 
 ## Tested environment
 - Ubuntu 20.04
@@ -29,3 +26,6 @@ This repository has a script called `alsactl.py` that listens `alsactl monitor` 
 ## Unix dependencies:
 - alsactl
 - stdbuf
+
+## Known issues
+- Script dies after system suspend
