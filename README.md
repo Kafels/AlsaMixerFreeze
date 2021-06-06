@@ -10,10 +10,17 @@ Every application that uses microphone (Discord, Google Hangouts, Microsoft Team
 ![image](https://user-images.githubusercontent.com/17178349/111149397-9869d680-856b-11eb-80bb-69b1cbeebf1e.png)
 
 ## What's the solution
-This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is fired, it means something tried to changed the configuration. After this, automatically executes `alsactl -f [alsactl_restore_conf_path] restore` to return the custom configuration.
+This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is fired, it means something tried to changed the configuration. After this, automatically executes `alsactl restore` to return the custom configuration.
 
 ## How to setup
-- Run `chmod +x ./install && ./install.sh` command
+```bash
+# Cloning the repository and running install.sh script
+git clone https://github.com/Kafels/AlsaMixerFreeze.git && cd AlsaMixerFreeze
+chmod +x ./install.sh && ./install.sh
+
+# Run only at first time
+alsamixer-freeze
+```
 
 ## Tested environment
 - Ubuntu 20.04
