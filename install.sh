@@ -20,8 +20,8 @@ ln -s "$(dirname "$(readlink -f "$0")")/run.sh" $SYMLINK_PATH
 
 COMMAND_NAME="alsamixer-freeze"
 PROFILE_PATH=$HOME/.profile
-if ! grep -wq "$COMMAND_NAME" $HOME/.profile; then
-  echo "Enabling to automatically execute 'alsamixer-freeze' command after login"
+if ! grep -wq "$COMMAND_NAME" $PROFILE_PATH; then
+  echo "Enabling to automatically execute '$COMMAND_NAME' command after login"
   echo "# AlsaMixer Freeze" >> $PROFILE_PATH
   echo "alsamixer-freeze" >> $PROFILE_PATH
 else
