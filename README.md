@@ -6,7 +6,7 @@ Every application that uses microphone (Discord, Google Hangouts, Microsoft Team
 ![problem](https://user-images.githubusercontent.com/17178349/121073319-bcbf0300-c7a8-11eb-8c13-d56abf86e274.png)
 
 ## What's the solution
-This repository has a script called `alsactl.py` that listens `alsactl monitor` events. If any event is fired, it means something tried to changed the configuration. After this, automatically executes `alsactl restore` to return the custom configuration.
+The `alsactl.py` script listens `alsactl monitor` events. When an event is fired, it means something tried to changed the configuration and this script runs automatically `alsactl restore` to return the custom configuration.
 
 ## How to setup
 ```bash

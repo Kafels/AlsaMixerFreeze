@@ -6,24 +6,18 @@ else
   echo "File '$ALSA_CONFIG_PATH' already exists"
 fi
 
-echo "Adding run.sh file permissions to run"
-chmod +x run.sh
-
-SYMLINK_PATH=$HOME/.local/bin/alsamixer-freeze
-if [ -f "$SYMLINK_PATH" ]; then
-  echo "Symlink '$SYMLINK_PATH' already exists. It's going to be recreate"
-  rm $SYMLINK_PATH
-fi
-
-echo "Creating a symlink at '$SYMLINK_PATH'"
-ln -s "$(dirname "$(readlink -f "$0")")/run.sh" $SYMLINK_PATH
-
 COMMAND_NAME="alsamixer-freeze"
+COMMAND_BIN_PATH="$HOME/.local/bin/$COMMAND_NAME"
+
+echo "Creating executable file at '$COMMAND_BIN_PATH'"
+echo "python3 $PWD/alsactl.py >/dev/null 2>&1 &" > $COMMAND_BIN_PATH
+chmod +x $COMMAND_BIN_PATH
+
 PROFILE_PATH=$HOME/.profile
 if ! grep -wq "$COMMAND_NAME" $PROFILE_PATH; then
   echo "Enabling to automatically execute '$COMMAND_NAME' command after login"
   echo "# AlsaMixer Freeze" >> $PROFILE_PATH
   echo "alsamixer-freeze" >> $PROFILE_PATH
 else
-  echo "Command '$COMMAND_NAME' already exists in '$PROFILE_PATH'"
+  echo "Command '$COMMAND_NAME' already exists at '$PROFILE_PATH'"
 fi
