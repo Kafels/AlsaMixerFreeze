@@ -1,10 +1,11 @@
 import os
 import subprocess
 
+RESTORE_FILE_PATH = '{home}/.config/asound.state'.format(home=os.environ['HOME'])
+
 
 def restore():
-    file_path = '{home}/.config/asound.state'.format(home=os.environ['HOME'])
-    reset = subprocess.Popen(['alsactl', '-f', file_path, 'restore'])
+    reset = subprocess.Popen(['alsactl', '-f', RESTORE_FILE_PATH, 'restore'])
     reset.communicate()
 
 

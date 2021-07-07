@@ -11,11 +11,8 @@ The `alsactl.py` script listens `alsactl monitor` events. When an event is fired
 ## How to setup
 ```bash
 # Cloning the repository and running install.sh script
-git clone https://github.com/Kafels/AlsaMixerFreeze.git && cd AlsaMixerFreeze
-chmod +x ./install.sh && ./install.sh
-
-# Run only at first time
-alsamixer-freeze
+git clone https://github.com/Kafels/AlsaMixerFreeze.git
+cd AlsaMixerFreeze && chmod +x ./install.sh && ./install.sh
 ```
 
 ## Tested environment
