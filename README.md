@@ -8,36 +8,37 @@ Every application that uses microphone (Discord, Google Hangouts, Microsoft Team
 
 ## What's the solution
 
-The `alsactl.py` script listens `alsactl monitor` events. When an event is fired, it means something tried to changed the configuration and this script runs automatically `alsactl restore` to return the custom configuration.
+The `alsactl.sh` script listens `alsactl monitor` events. When an event is trigger, it means something tried to change the configuration and this script runs automatically `alsactl restore` to return the custom configuration.
 
-## How to setup
-
+### How to install
 ```bash
-# Cloning the repository and running install.sh script
 git clone https://github.com/Kafels/AlsaMixerFreeze.git
-cd AlsaMixerFreeze && chmod +x ./install.sh && ./install.sh
+cd AlsaMixerFreeze && chmod +x ./install.sh && sudo ./install.sh
 ```
 
-## How to uninstall
-
+### How to uninstall
 ```bash
-chmod +x ./uninstall.sh && ./uninstall.sh
+chmod +x ./uninstall.sh && sudo ./uninstall.sh
+```
+
+### How to pause if needed
+```bash
+# Pause
+sudo systemctl stop alsamixer-freeze
+
+# Start
+# sudo systemctl start alsamixer-freeze
 ```
 
 ## Tested environment
 
 - Ubuntu 20.04
-- Python 3.8
-
-## Python dependencies
-
-- os (inbuilt)
-- subprocess (inbuilt)
 
 ## Unix dependencies:
 
 - alsactl
 - stdbuf
+- systemctl
 
 ## Known issues
 
