@@ -1,30 +1,29 @@
-ALSA_CONFIG_PATH="$HOME/.config/asound.state"
-if [ ! -f "$ALSA_CONFIG_PATH" ]; then
-  echo "Storing your current configuration at '$ALSA_CONFIG_PATH'"
-  alsactl -f $ALSA_CONFIG_PATH store
+#!/bin/bash
+
+ALSAMIXER_FREEZE__OPT="/opt/alsamixer-freeze"
+ALSAMIXER_FREEZE__CONFIG_PATH="$ALSAMIXER_FREEZE__OPT/asound.state"
+ALSAMIXER_FREEZE__BIN="alsactl.sh"
+ALSAMIXER_FREEZE__SERVICE_NAME="alsamixer-freeze.service"
+
+echo "Creating folder '$ALSAMIXER_FREEZE__OPT' if not exists"
+mkdir -p $ALSAMIXER_FREEZE__OPT
+
+if [ ! -f "$ALSAMIXER_FREEZE__CONFIG_PATH" ]; then
+  echo "Storing your current configuration at '$ALSAMIXER_FREEZE__CONFIG_PATH'"
+  alsactl -f $ALSAMIXER_FREEZE__CONFIG_PATH store
+  chmod +x $ALSAMIXER_FREEZE__CONFIG_PATH
 else
-  echo "File '$ALSA_CONFIG_PATH' already exists"
+  echo "File '$ALSAMIXER_FREEZE__CONFIG_PATH' already exists"
 fi
 
-COMMAND_NAME="alsamixer-freeze"
-LOCAL_BIN_PATH="$HOME/.local/bin"
-COMMAND_BIN_PATH="$LOCAL_BIN_PATH/$COMMAND_NAME"
+echo "Creating '$ALSAMIXER_FREEZE__SERVICE_NAME'"
+cp "$PWD/$ALSAMIXER_FREEZE__BIN" "$ALSAMIXER_FREEZE__OPT/$ALSAMIXER_FREEZE__BIN"
+chmod +x "$ALSAMIXER_FREEZE__OPT/$ALSAMIXER_FREEZE__BIN"
 
-echo "Creating '$LOCAL_BIN_PATH' if not exists"
-mkdir -p $LOCAL_BIN_PATH
+cp "$ALSAMIXER_FREEZE__SERVICE_NAME.template" $ALSAMIXER_FREEZE__SERVICE_NAME
+sed -i "s|{{BINARY}}|$(echo "$ALSAMIXER_FREEZE__OPT/$ALSAMIXER_FREEZE__BIN")|g" $ALSAMIXER_FREEZE__SERVICE_NAME
 
-echo "Creating executable file at '$COMMAND_BIN_PATH'"
-echo "python3 $PWD/alsactl.py >/dev/null 2>&1 &" > $COMMAND_BIN_PATH
-chmod +x $COMMAND_BIN_PATH
-
-PROFILE_PATH="$HOME/.profile"
-if ! grep -wq "$COMMAND_NAME" $PROFILE_PATH; then
-  echo "Enabling to automatically execute '$COMMAND_NAME' command after login"
-  echo "# AlsaMixer Freeze" >> $PROFILE_PATH
-  echo "alsamixer-freeze" >> $PROFILE_PATH
-else
-  echo "Command '$COMMAND_NAME' already exists at '$PROFILE_PATH'"
-fi
-
-source $PROFILE_PATH
-echo "Done"
+mv $ALSAMIXER_FREEZE__SERVICE_NAME /etc/systemd/system/
+systemctl daemon-reload
+systemctl start $ALSAMIXER_FREEZE__SERVICE_NAME
+systemctl enable $ALSAMIXER_FREEZE__SERVICE_NAME

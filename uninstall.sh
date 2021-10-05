@@ -1,26 +1,14 @@
-COMMAND_NAME="alsamixer-freeze"
-LOCAL_BIN_PATH="$HOME/.local/bin"
-COMMAND_BIN_PATH="$LOCAL_BIN_PATH/$COMMAND_NAME"
+#!/bin/bash
 
-# Removing the alsamixer-freeze script
-if [ -f "$COMMAND_BIN_PATH" ]; then
-    echo "Removing $COMMAND_BIN_PATH"
-    rm "$COMMAND_BIN_PATH"
-fi
+ALSAMIXER_FREEZE__OPT="/opt/alsamixer-freeze"
+ALSAMIXER_FREEZE__SERVICE_NAME="alsamixer-freeze.service"
 
-PROFILE_PATH="$HOME/.profile"
+echo "Removing folder '$ALSAMIXER_FREEZE__OPT'"
+rm -rf $ALSAMIXER_FREEZE__OPT
 
-if [ -f "$PROFILE_PATH" ]; then
-    echo "Removing command from $PROFILE_PATH"
-    sed -i '/^# AlsaMixer Freeze\|^alsamixer-freeze/d' "$PROFILE_PATH"
-fi
-
-read -r -p "Do you want to reboot the system for changes to apply? [y/N]" choice
-
-if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-    echo "Rebooting..."
-    sudo reboot -f
-fi
-
-
-
+echo "Removing '$ALSAMIXER_FREEZE__SERVICE_NAME'"
+systemctl stop $ALSAMIXER_FREEZE__SERVICE_NAME
+systemctl disable $ALSAMIXER_FREEZE__SERVICE_NAME
+rm /etc/systemd/system/$ALSAMIXER_FREEZE__SERVICE_NAME
+systemctl daemon-reload
+systemctl reset-failed

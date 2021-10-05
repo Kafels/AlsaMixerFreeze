@@ -1,0 +1,8 @@
+[Unit]
+Description=Prevent applications to modify AlsaMixer settings
+
+[Service]
+ExecStart={{BINARY}}
+
+[Install]
+WantedBy=multi-user.target
